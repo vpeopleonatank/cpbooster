@@ -41,6 +41,7 @@ export default class Config {
   preferredLang: string;
   hideTestCaseInput: boolean;
   cloneInCurrentDir: boolean;
+  cloneCfDirectSingleFile: boolean;
   // config for language extension
   languages: Record<string, LangConfig | undefined>;
 
@@ -54,6 +55,7 @@ export default class Config {
     this.preferredLang = "cpp";
     this.hideTestCaseInput = false;
     this.cloneInCurrentDir = false;
+    this.cloneCfDirectSingleFile = false;
     this.languages = {
       cpp: {
         template: "",

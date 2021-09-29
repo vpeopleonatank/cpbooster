@@ -22,6 +22,7 @@ import CCServer from "./CCServer";
 
 export interface ICommandCloneArgs extends ICommandGlobalArgs {
   here?: boolean;
+  cfSingleHere?: boolean;
   port?: number;
 }
 
@@ -32,6 +33,9 @@ export function clone(args: ICommandCloneArgs): void {
   }
   if (args.here) {
     config.cloneInCurrentDir = true;
+  }
+  if (args.cfSingleHere) {
+    config.cloneCfDirectSingleFile = true;
   }
   new CCServer(config).run();
 }

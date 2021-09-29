@@ -73,6 +73,10 @@ yargs
           type: "boolean",
           description:
             "Clones the contest or problem in current directory instead of your global contests directory"
+        })
+        .option("cfSingleHere", {
+          type: "boolean",
+          description: "Clones only one problem directly to current directory"
         });
     },
     (argv) => clone(argv as unknown as ICommandCloneArgs)

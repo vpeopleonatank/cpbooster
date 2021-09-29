@@ -47,15 +47,22 @@ export default class CCServer {
       const problemData: ProblemData = request.body;
       problemData.name = Util.normalizeFileName(problemData.name);
       problemData.group = Util.normalizeFileName(problemData.group);
-
-      this.contestName = problemData.group;
-      const contestPath = config.cloneInCurrentDir
-        ? this.contestName
-        : Path.join(config.contestsDirectory, problemData.group);
-      if (!fs.existsSync(contestPath)) fs.mkdirSync(contestPath, { recursive: true });
-      const FilesPathNoExtension = `${Path.join(contestPath, problemData.name)}`;
+      let filePath = "";
       const extension = `.${config.preferredLang}`;
-      const filePath = `${FilesPathNoExtension}${extension}`;
+      if (config.cloneCfDirectSingleFile) {
+        filePath = `CF${problemData.url.match(/\d+/)![0]}-D${
+          problemData.group[problemData.group.length - 1]
+        }-${problemData.url[problemData.url.length - 1]}${extension};
+        }`;
+      } else {
+        this.contestName = problemData.group;
+        const contestPath = config.cloneInCurrentDir
+          ? this.contestName
+          : Path.join(config.contestsDirectory, problemData.group);
+        if (!fs.existsSync(contestPath)) fs.mkdirSync(contestPath, { recursive: true });
+        const FilesPathNoExtension = `${Path.join(contestPath, problemData.name)}`;
+        filePath = `${FilesPathNoExtension}${extension}`;
+      }
       SourceFileCreator.create(filePath, config, problemData.timeLimit, problemData.url);
       problemData.tests.forEach((testcase, idx) => {
         fs.writeFileSync(Tester.getInputPath(filePath, idx + 1), testcase.input);
