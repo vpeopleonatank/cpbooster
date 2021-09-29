@@ -24,7 +24,7 @@ import { LangExtensions } from "./LangExtensions";
 import Config from "Config/Config";
 
 export default class Util {
-  static allowedSpecialChars = new Set(["_", "."]);
+  static allowedSpecialChars = new Set(["_", ".", "-"]);
 
   static isAlpha(char: string): boolean {
     if (char.length != 1) {
